@@ -10,7 +10,18 @@
 #  updated_at :datetime         not null
 #
 
+require 'pry'
 class Student < ActiveRecord::Base
   has_many :classroom_students
   has_many :classrooms, through: :classroom_students
+
+	def self.search(name)
+		output = self.where("name LIKE ?", "%#{name}%")
+		if output.any?
+			output
+		else 
+			Student.all
+		end
+	end
+
 end
